@@ -10,7 +10,17 @@
     <meta name="keywords" content="<%=@page.meta_keywords%>">
     <meta name="description" content="<%=@page.meta_description%>">
   <% end -%>
-   <%= render partial: 'spree/shared/filters' %>
+   
+   <% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
+<nav id="taxonomies" class="sidebar-item" data-hook>
+  <% @taxonomies.each do |taxonomy| %>
+    <% cache [I18n.locale, taxonomy, max_level] do %>
+      <h6 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name) %></h6>
+      <%= taxons_tree(taxonomy.root, @taxon, max_level) %>
+    <% end %>
+  <% end %>
+</nav>
+   
  <% content_for :sidebar do %>
     <% if (defined?(@products) && @products) && (defined?(@taxon) && @taxon) %>
       <%= render partial: 'spree/shared/filters' %>
