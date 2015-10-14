@@ -10,7 +10,7 @@
     <meta name="keywords" content="<%=@page.meta_keywords%>">
     <meta name="description" content="<%=@page.meta_description%>">
   <% end -%>
-  
+   <%= render partial: 'spree/shared/filters' %>
  <% content_for :sidebar do %>
     <% if (defined?(@products) && @products) && (defined?(@taxon) && @taxon) %>
       <%= render partial: 'spree/shared/filters' %>
